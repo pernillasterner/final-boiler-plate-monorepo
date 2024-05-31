@@ -20,7 +20,7 @@ export const UserProvider = ({ children }) => {
     try {
       // Ensure this points to the correct backend URL
       const response = await fetch(
-        "https://technigo-project-auth.onrender.com/sessions",
+        "https://technigo-final-project-pluggin.onrender.com/sessions",
         {
           method: "POST",
           headers: {
@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
         }
       );
       if (!response.ok) {
-        console.log("Login failed")
+        console.log("Login failed");
         throw new Error("Failed to get user");
       }
 
@@ -50,22 +50,21 @@ export const UserProvider = ({ children }) => {
     }
   };
 
-
   const signout = () => {
-    localStorage.removeItem("accessToken")
+    localStorage.removeItem("accessToken");
     setIsLoggedIn(false);
     setAuthenticated({
       auth: false,
-    })
+    });
     navigate("/login");
-  }
+  };
 
   // Function that sends userData to MongoDB to create a new user
   const registerUser = async (userData) => {
     try {
       // Ensure this points to the correct backend URL
       const response = await fetch(
-        "https://technigo-project-auth.onrender.com/users",
+        "https://technigo-final-project-pluggin.onrender.com/users",
         {
           method: "POST",
           headers: {
