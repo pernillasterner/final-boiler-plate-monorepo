@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useLogin } from "./../../contexts/UserContext";
+import { Hero } from "./Hero";
 
 const data = {
   _id: "adf456456545",
@@ -29,56 +30,17 @@ const data = {
   },
 };
 
-// Function that will calculate the total result and return %
-const calcTotalResult = (progress) => {
-  // Get all subjects from object
-  const subjects = Object.values(progress);
-  // Need to get totalScore and totalMaxScore to get the total result in percentage
-  const totalScore = subjects.reduce((acc, subject) => acc + subject.score, 0);
-  const totalMaxScore = subjects.reduce(
-    (acc, subject) => acc + subject.totalScore,
-    0
-  );
-  console.log(subjects);
-  console.log(totalMaxScore);
-
-  return (totalScore / totalMaxScore) * 100;
-};
-
 export const Progress = () => {
   const { user } = useLogin();
   console.log(data);
   const { progress } = data;
 
   //TODO:
-
   // Räkna ut totala resultatet av varje ämne
-
-  const totalResultPercentage = calcTotalResult(progress);
 
   return (
     <ProgressContainer>
-      <HeroContainer>
-        <HeroLeft>
-          <HeroTitle>Hej {user?.username} 👋</HeroTitle>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod
-            voluptatibus voluptates velit voluptate nam, minus aperiam totam
-            quos recusandae eos debitis iusto atque asperiores sunt animi
-            consequatur quidem quibusdam sequi.
-          </p>
-        </HeroLeft>
-        <HeroRight>
-          <ProgressTitle>Totala resultatet</ProgressTitle>
-          <ProgressBox>
-            <ProgressCircel>
-              <ProgressScore>
-                <p>{totalResultPercentage.toFixed(2)}%</p>
-              </ProgressScore>
-            </ProgressCircel>
-          </ProgressBox>
-        </HeroRight>
-      </HeroContainer>
+      <Hero user={user} progress={progress} />
 
       <ProgressWrapper>
         <div className="progress__subject math">
@@ -135,30 +97,6 @@ export const Progress = () => {
 
 const ProgressContainer = styled.div`
   margin: 0 auto;
-`;
-
-const HeroContainer = styled.div`
-  display: flex;
-  padding: 60px 30px;
-  min-height: 400px;
-`;
-
-const HeroTitle = styled.h1`
-  margin: 10px 0;
-`;
-
-const HeroLeft = styled.div`
-  width: 50%;
-`;
-
-const HeroRight = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  background-color: #f1f1f1;
-  border-radius: 30px;
 `;
 
 const ProgressWrapper = styled.div`
