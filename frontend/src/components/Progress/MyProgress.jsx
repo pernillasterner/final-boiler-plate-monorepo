@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useLogin } from "./../../contexts/UserContext";
 import { Hero } from "./Hero";
 
-const data = {
+const user = {
   _id: "adf456456545",
   username: "pillan",
   password: "losenord321!",
@@ -11,32 +11,43 @@ const data = {
   age: "8",
   email: "mamma.svensson@example.com",
   accessToken: "943588945",
-  progress: {
-    math: {
-      level: 2,
-      score: 15,
-      totalScore: 20,
-    },
-    swedish: {
-      level: 1,
-      score: 40,
-      totalScore: 40,
-    },
-    english: {
-      level: 3,
-      score: 18,
-      totalScore: 20,
-    },
+};
+
+const progress = {
+  math: {
+    levels: [
+      { level: 1, score: 5, totalScore: 20 },
+      { level: 2, score: 7, totalScore: 20 },
+    ],
   },
+  swedish: {
+    levels: [
+      { level: 1, score: 5, totalScore: 20 },
+      { level: 2, score: 7, totalScore: 20 },
+      { level: 3, score: 16, totalScore: 20 },
+    ],
+  },
+  english: {
+    levels: [{ level: 1, score: 10, totalScore: 20 }],
+  },
+};
+
+// Function that will calc totalscore for each subject
+const calcSubjectResult = (subject) => {
+  const totalScore = subject.levels.reduce(
+    (acc, level) => acc + level.score,
+    0
+  );
+  const totalMaxScore = subject.levels.reduce(
+    (acc, level) => acc + level.totalScore,
+    0
+  );
+  return (totalScore / totalMaxScore) * 100;
 };
 
 export const Progress = () => {
   const { user } = useLogin();
-  console.log(data);
-  const { progress } = data;
-
-  //TODO:
-  // Räkna ut totala resultatet av varje ämne
+  const { math, swedish, english } = progress;
 
   return (
     <ProgressContainer>
@@ -44,37 +55,34 @@ export const Progress = () => {
 
       <ProgressWrapper>
         <div className="progress__subject math">
-          <ProgressTitle>MATTE</ProgressTitle>
+          <ProgressTitle>matte</ProgressTitle>
           <ProgressBox>
-            {/* <p>Poäng: {progress.math.score}</p> */}
-            <ProgressCircel>
+            <ProgressCircel className="blue">
               <ProgressScore>
-                <p>Nivå: {progress.math.level}</p>
-                <p>73%</p>
+                <p>Nivå: {math.levels.length}</p>
+                <p>{calcSubjectResult(math).toFixed(0)}%</p>
               </ProgressScore>
             </ProgressCircel>
           </ProgressBox>
         </div>
         <div className="progress__subject swedish">
-          <ProgressTitle>SVENSKA</ProgressTitle>
+          <ProgressTitle>svenska</ProgressTitle>
           <ProgressBox>
-            {/* <p>Poäng: {progress.swedish.score}</p> */}
-            <ProgressCircel>
+            <ProgressCircel className="orange">
               <ProgressScore>
-                <p>Nivå: {progress.swedish.level}</p>
-                <p>23%</p>
+                <p>Nivå: {swedish.levels.length}</p>
+                <p>{calcSubjectResult(swedish).toFixed(0)}%</p>
               </ProgressScore>
             </ProgressCircel>
           </ProgressBox>
         </div>
         <div className="progress__subject english">
-          <ProgressTitle>ENGELSKA</ProgressTitle>
+          <ProgressTitle>engelska</ProgressTitle>
           <ProgressBox>
-            {/* <p>Poäng: {progress.english.score}</p> */}
-            <ProgressCircel>
+            <ProgressCircel className="green">
               <ProgressScore>
-                <p>Nivå: {progress.english.level}</p>
-                <p>45%</p>
+                <p>Nivå: {english.levels.length}</p>
+                <p>{calcSubjectResult(english).toFixed(0)}%</p>
               </ProgressScore>
             </ProgressCircel>
           </ProgressBox>
@@ -103,7 +111,7 @@ const ProgressWrapper = styled.div`
   padding: 30px;
   display: flex;
   justify-content: space-around;
-  background-color: lightpink;
+  background-color: #e5e5e5;
 `;
 
 const ProgressTitle = styled.h2`
@@ -121,7 +129,6 @@ const ProgressBox = styled.div`
 `;
 
 const ProgressCircel = styled.div`
-  background-color: lightcoral;
   position: relative;
   border-radius: 100%;
   width: 250px;

@@ -55,3 +55,15 @@ input {
 a {
   text-decoration: none;
 }
+
+.blue {
+  background-color: #5189d3;
+}
+
+.orange {
+  background-color: #ff9a3d;
+}
+
+.green {
+  background-color: #3ece89;
+}
