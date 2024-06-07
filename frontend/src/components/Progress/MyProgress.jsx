@@ -53,12 +53,11 @@ export const Progress = () => {
   return (
     <ProgressContainer>
       <Hero user={user} progress={progress} />
-
       <ProgressWrapper>
         <div className="progress__subject math">
           <ProgressTitle>matte</ProgressTitle>
           <ProgressBox>
-            <ProgressCircel className="blue">
+            <ProgressCircel className="crl-math">
               <ProgressScore>
                 <p>Nivå: {math.levels.length}</p>
                 <p>{calcSubjectResult(math).toFixed(0)}%</p>
@@ -69,7 +68,7 @@ export const Progress = () => {
         <div className="progress__subject swedish">
           <ProgressTitle>svenska</ProgressTitle>
           <ProgressBox>
-            <ProgressCircel className="orange">
+            <ProgressCircel className="crl-swedish">
               <ProgressScore>
                 <p>Nivå: {swedish.levels.length}</p>
                 <p>{calcSubjectResult(swedish).toFixed(0)}%</p>
@@ -80,7 +79,7 @@ export const Progress = () => {
         <div className="progress__subject english">
           <ProgressTitle>engelska</ProgressTitle>
           <ProgressBox>
-            <ProgressCircel className="green">
+            <ProgressCircel className="crl-english">
               <ProgressScore>
                 <p>Nivå: {english.levels.length}</p>
                 <p>{calcSubjectResult(english).toFixed(0)}%</p>
@@ -89,28 +88,7 @@ export const Progress = () => {
           </ProgressBox>
         </div>
       </ProgressWrapper>
-
-      <LevelProgressBar progress={progress} />
-      {/* <LevelContainer>
-        <h2>Svenska</h2>
-        <LevelWrapper>
-          {progress.swedish.levels.map((level, index) => (
-            <LevelProgress key={index}>
-              <p>
-                Nivå: {level.level} - {level.score} / {level.totalScore}
-              </p>
-              <ProgressBar>
-                <ProgressForSubjects
-                  className="orange"
-                  style={{
-                    width: `${(level.score / level.totalScore) * 100}%`,
-                  }}
-                ></ProgressForSubjects>
-              </ProgressBar>
-            </LevelProgress>
-          ))}
-        </LevelWrapper>
-      </LevelContainer> */}
+      <LevelProgressBar progress={progress} />´
     </ProgressContainer>
   );
 };
