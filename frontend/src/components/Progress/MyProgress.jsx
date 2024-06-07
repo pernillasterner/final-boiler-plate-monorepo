@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useLogin } from "./../../contexts/UserContext";
 import { Hero } from "./Hero";
+import { LevelProgressBar } from "./LevelProgressBar";
 
 const user = {
   _id: "adf456456545",
@@ -89,16 +90,27 @@ export const Progress = () => {
         </div>
       </ProgressWrapper>
 
-      <LevelContainer>
-        <h2>Matte</h2>
+      <LevelProgressBar progress={progress} />
+      {/* <LevelContainer>
+        <h2>Svenska</h2>
         <LevelWrapper>
-          <LevelProgress>
-            <p>Nivå: 1 - 10 / 20</p>
-            Här ska finnas två bars, en som alltid är 100% och den andra ska
-            ligga ovanpå och visa hur många % som är kvar
-          </LevelProgress>
+          {progress.swedish.levels.map((level, index) => (
+            <LevelProgress key={index}>
+              <p>
+                Nivå: {level.level} - {level.score} / {level.totalScore}
+              </p>
+              <ProgressBar>
+                <ProgressForSubjects
+                  className="orange"
+                  style={{
+                    width: `${(level.score / level.totalScore) * 100}%`,
+                  }}
+                ></ProgressForSubjects>
+              </ProgressBar>
+            </LevelProgress>
+          ))}
         </LevelWrapper>
-      </LevelContainer>
+      </LevelContainer> */}
     </ProgressContainer>
   );
 };
@@ -117,6 +129,7 @@ const ProgressWrapper = styled.div`
 const ProgressTitle = styled.h2`
   margin: 10px 0;
   text-align: center;
+  text-transform: uppercase;
 `;
 
 const ProgressBox = styled.div`
@@ -143,19 +156,4 @@ const ProgressScore = styled.div`
   font-size: 2rem;
   position: absolute;
   text-align: center;
-`;
-
-const LevelContainer = styled.div`
-  padding: 30px;
-  background-color: #f1f1f1;
-`;
-
-const LevelWrapper = styled.div`
-  padding: 20px 0;
-  background-color: lightgreen;
-`;
-
-const LevelProgress = styled.div`
-  padding: 0 20px;
-  background-color: yellow;
 `;
