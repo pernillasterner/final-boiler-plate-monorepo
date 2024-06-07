@@ -1,28 +1,39 @@
 import styled from "styled-components";
+import PropTypes from "prop-types";
 
 export const LevelProgressBar = ({ progress }) => {
+  const subjects = ["swedish", "english", "math"];
+
   return (
     <LevelContainer>
-      <h2>Svenska</h2>
-      <LevelWrapper>
-        {progress.swedish.levels.map((level, index) => (
-          <LevelProgress key={index}>
-            <p>
-              Nivå: {level.level} - {level.score} / {level.totalScore}
-            </p>
-            <ProgressBar>
-              <ProgressForSubjects
-                className="orange"
-                style={{
-                  width: `${(level.score / level.totalScore) * 100}%`,
-                }}
-              ></ProgressForSubjects>
-            </ProgressBar>
-          </LevelProgress>
-        ))}
-      </LevelWrapper>
+      {subjects.map((subject) => (
+        <div key={subject}>
+          <h2>{subject.toUpperCase()}</h2>
+          <LevelWrapper>
+            {progress[subject].levels.map((level, index) => (
+              <LevelProgress key={index}>
+                <p>
+                  Nivå: {level.level} - {level.score} / {level.totalScore}
+                </p>
+                <ProgressBar>
+                  <ProgressForSubjects
+                    className={`crl-${subject}`}
+                    style={{
+                      width: `${(level.score / level.totalScore) * 100}%`,
+                    }}
+                  ></ProgressForSubjects>
+                </ProgressBar>
+              </LevelProgress>
+            ))}
+          </LevelWrapper>
+        </div>
+      ))}
     </LevelContainer>
   );
+};
+
+LevelProgressBar.propTypes = {
+  progress: PropTypes.object.isRequired,
 };
 
 const LevelContainer = styled.div`
