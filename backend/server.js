@@ -83,16 +83,60 @@ const User = mongoose.model("User", {
   },
   progress: {
     math: {
-      level: { type: Number, default: 1 },
-      score: { type: Number, default: 0 },
+      addition: {
+        levels: [
+          {
+            level: { type: Number, default: 1 },
+            score: { type: Number, default: 0 },
+            levelScore: { type: Number, default: 20 },
+          },
+        ],
+      },
+      multiplication: {
+        levels: [
+          {
+            level: { type: Number, default: 1 },
+            score: { type: Number, default: 0 },
+            levelScore: { type: Number, default: 20 },
+          },
+        ],
+      },
+      subtraction: {
+        levels: [
+          {
+            level: { type: Number, default: 1 },
+            score: { type: Number, default: 0 },
+            levelScore: { type: Number, default: 20 },
+          },
+        ],
+      },
+      division: {
+        levels: [
+          {
+            level: { type: Number, default: 1 },
+            score: { type: Number, default: 0 },
+            levelScore: { type: Number, default: 20 },
+          },
+        ],
+      },
     },
     swedish: {
-      level: { type: Number, default: 1 },
-      score: { type: Number, default: 0 },
+      levels: [
+        {
+          level: { type: Number, default: 1 },
+          score: { type: Number, default: 0 },
+          levelScore: { type: Number, default: 20 },
+        },
+      ],
     },
     english: {
-      level: { type: Number, default: 1 },
-      score: { type: Number, default: 0 },
+      levels: [
+        {
+          level: { type: Number, default: 1 },
+          score: { type: Number, default: 0 },
+          levelScore: { type: Number, default: 20 },
+        },
+      ],
     },
   },
 });
