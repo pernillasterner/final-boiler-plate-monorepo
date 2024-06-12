@@ -70,10 +70,16 @@ const mathSchema = new mongoose.Schema({
   },
 });
 
-const subjectSchema = new mongoose.Schema({
-  level: { type: Number, default: 1 },
-  score: { type: Number, default: 0 },
-  levelScore: { type: Number, default: 20 },
+const swedishSchema = new mongoose.Schema({
+  synonyms: {
+    levels: [levelSchema],
+  },
+});
+
+const englishSchema = new mongoose.Schema({
+  translate: {
+    levels: [levelSchema],
+  },
 });
 
 // Defining schema for a User
@@ -110,8 +116,8 @@ const userSchema = new mongoose.Schema({
   },
   progress: {
     math: mathSchema,
-    swedish: subjectSchema,
-    english: subjectSchema,
+    swedish: swedishSchema,
+    english: englishSchema,
   },
 });
 
@@ -175,6 +181,16 @@ app.post("/users", async (req, res) => {
       age,
       email,
       password: bcrypt.hashSync(password, salt),
+      progress: {
+        math: {
+          addition: { levels: [{}, {}, {}, {}] },
+          multiplication: { levels: [{}, {}, {}, {}] },
+          subtraction: { levels: [{}, {}, {}, {}] },
+          division: { levels: [{}, {}, {}, {}] },
+        },
+        swedish: { synonyms: { levels: [{}, {}, {}, {}] } },
+        english: { translate: { levels: [{}, {}, {}, {}] } },
+      },
     });
     await user.save();
     res.status(201).json({
@@ -217,6 +233,30 @@ app.get("/games", async (req, res) => {
   res
     .status(200)
     .json({ message: "Secret message only for logged in users to see!" });
+});
+
+// Endpoint for updating users progress
+app.post("/progress", authenticateUser, async (req, res) => {
+  const { category, subcategory, answer, level } = req.body;
+  const user = req.user;
+
+  try {
+    // Get users progress from selected category
+    const gameProgress = user.progress[category];
+    // TODO:  Error if category not exist
+
+    // Handling subcatetories
+    const subCatProgress = game[subcategory];
+    // If no sub category need to return error message
+    if (!subCatProgress) {
+      return res.status(400).json({ message: "Invalid category" });
+    }
+
+    // Update score
+    console.log(gameProgress);
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 // Start the server
