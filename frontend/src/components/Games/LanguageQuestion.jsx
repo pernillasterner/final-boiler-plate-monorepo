@@ -1,10 +1,10 @@
-import PropTypes from "prop-types"
-import styled from "styled-components"
-import { useState, useEffect } from "react"
-import { useScore } from "../../contexts/ScoreContext"
-import Lottie from "lottie-react"
-import Right from "../../assets/Right.json"
-import Wrong from "../../assets/Wrong.json"
+import PropTypes from "prop-types";
+import styled from "styled-components";
+import { useState, useEffect } from "react";
+import { useScore } from "../../contexts/ScoreContext";
+import Lottie from "lottie-react";
+import Right from "../../assets/Right.json";
+import Wrong from "../../assets/Wrong.json";
 
 export const LanguageQuestion = ({ type, language, color }) => {
   const {
@@ -20,37 +20,51 @@ export const LanguageQuestion = ({ type, language, color }) => {
     setDisableButton,
     generateQuestion,
     rightAnswer,
-  } = useScore()
+  } = useScore();
 
-  const game = (language === "swedish" ? swedishGame : englishGame)
-  const setGame = (language === "swedish" ? setSwedishGame : setEnglishGame)
-  const currentScore = game[Number(type)].score
+  const game = language === "swedish" ? swedishGame : englishGame;
+  const setGame = language === "swedish" ? setSwedishGame : setEnglishGame;
+  const currentScore = game[Number(type)].score;
+  const { registerAnswer } = useScore();
 
   //States to handle right/wrong answer
-  const [rightLottie, setRightLottie] = useState(false)
-  const [wrongLottie, setWrongLottie] = useState(false)
+  const [rightLottie, setRightLottie] = useState(false);
+  const [wrongLottie, setWrongLottie] = useState(false);
 
   useEffect(() => {
-    generateQuestion(language)
+    generateQuestion(language);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, []);
 
   //Takes users answer and compare it to right answer to generate right/wrong-message
-  const handleChoice = (answer) => {
+  const handleChoice = async (answer) => {
+    console.log(answer);
+    console.log(language);
     if (answer === rightAnswer) {
-      setTimeout(() => setRightLottie(true), 1000)
-      const newGame = [...game]
-      setTimeout(() => newGame[Number(type)].score = currentScore + 1, 3000)
-      setTimeout(() => setGame(newGame), 3000)
-      setTimeout(() => setRightLottie(false), 5000)
+      setTimeout(() => setRightLottie(true), 1000);
+      const newGame = [...game];
+      setTimeout(() => (newGame[Number(type)].score = currentScore + 1), 3000);
+      setTimeout(() => setGame(newGame), 3000);
+      setTimeout(() => setRightLottie(false), 5000);
+
+      // Send answer to backend
+      try {
+        await registerAnswer({
+          answer,
+          language,
+          level: game[Number(type)].level,
+        });
+      } catch (err) {
+        console.error("Error registration answer", err);
+      }
     } else {
-      setTimeout(() => setWrongLottie(true), 1000)
-      setTimeout(() => setMessage(`Rätt svar var ${rightAnswer}.`), 3000)
-      setTimeout(() => setWrongLottie(false), 5000)
+      setTimeout(() => setWrongLottie(true), 1000);
+      setTimeout(() => setMessage(`Rätt svar var ${rightAnswer}.`), 3000);
+      setTimeout(() => setWrongLottie(false), 5000);
     }
     setDisableButton(true);
     setTimeout(() => generateQuestion(language), 5000);
-  }
+  };
 
   if (game[Number(type)].level < 4) {
     return (
@@ -93,7 +107,7 @@ export const LanguageQuestion = ({ type, language, color }) => {
         )}
         <Answers>
           {answers.map((answer, index) => {
-            const capsAnswer = answer.charAt(0).toUpperCase() + answer.slice(1)
+            const capsAnswer = answer.charAt(0).toUpperCase() + answer.slice(1);
             return (
               <AnswerButton
                 disabled={disableButton}
@@ -104,18 +118,16 @@ export const LanguageQuestion = ({ type, language, color }) => {
               >
                 {capsAnswer}
               </AnswerButton>
-            )
+            );
           })}
         </Answers>
         {message && <Message>{message}</Message>}
       </>
-    )
+    );
   } else {
-    return (
-      <Title>Du har klarat alla nivåer! Grattis!</Title>
-    )
+    return <Title>Du har klarat alla nivåer! Grattis!</Title>;
   }
-}
+};
 
 const HeaderDiv = styled.div`
   display: flex;
@@ -171,9 +183,7 @@ const QuestionCard = styled.div`
   align-content: center;
   font-size: 40px;
   background-color: ${(props) =>
-      props.color === "sunset"
-        ? "var(--sunset)"
-        : "var(--forest)"};
+    props.color === "sunset" ? "var(--sunset)" : "var(--forest)"};
   color: white;
   padding: 20px;
   margin: 10px auto;
@@ -236,9 +246,7 @@ const AnswerButton = styled.button`
 
     &:hover {
       background-color: ${(props) =>
-          props.color === "sunset"
-            ? "var(--sunset)"
-            : "var(--forest)"};
+        props.color === "sunset" ? "var(--sunset)" : "var(--forest)"};
     }
   }
 
@@ -265,4 +273,4 @@ LanguageQuestion.propTypes = {
   type: PropTypes.string,
   language: PropTypes.string,
   color: PropTypes.string,
-}
+};
