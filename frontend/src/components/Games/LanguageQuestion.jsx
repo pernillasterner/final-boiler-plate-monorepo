@@ -1,10 +1,12 @@
-import PropTypes from "prop-types";
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import { useScore } from "../../contexts/ScoreContext";
-import Lottie from "lottie-react";
-import Right from "../../assets/Right.json";
-import Wrong from "../../assets/Wrong.json";
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { useState, useEffect } from "react"
+import { useScore } from "../../contexts/ScoreContext"
+import Lottie from "lottie-react"
+import Right from "../../assets/Right.json"
+import Wrong from "../../assets/Wrong.json"
+import Celebrate from "../../assets/Celebrate.json"
+
 
 export const LanguageQuestion = ({ type, language, color }) => {
   const {
@@ -20,17 +22,22 @@ export const LanguageQuestion = ({ type, language, color }) => {
     setDisableButton,
     generateQuestion,
     rightAnswer,
-  } = useScore();
+    celebrateLottie
+  } = useScore()
+
 
   const game = language === "swedish" ? swedishGame : englishGame;
   const setGame = language === "swedish" ? setSwedishGame : setEnglishGame;
   const currentScore = game[Number(type)].score;
   const { registerAnswer } = useScore();
 
-  //States to handle right/wrong answer
-  const [rightLottie, setRightLottie] = useState(false);
-  const [wrongLottie, setWrongLottie] = useState(false);
 
+  //Animations to display right/wrong answer and level-change
+  const [rightLottie, setRightLottie] = useState(false)
+  const [wrongLottie, setWrongLottie] = useState(false)
+
+
+  //Start by generating a question
   useEffect(() => {
     generateQuestion(language);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,6 +83,24 @@ export const LanguageQuestion = ({ type, language, color }) => {
               ⭐{currentScore}/{game[Number(type)].levelScore}
             </Score>
           </Progress>
+          {celebrateLottie && (
+            <div
+              style={{
+                position: "absolute",
+                top: "20%",
+                left: "67%",
+                transform: "translate(-50%, -50%)",
+                zIndex: 2,
+              }}
+            >
+              <Lottie
+                animationData={Celebrate}
+                loop={false}
+                autoplay
+                style={{ width: 200, height: 200 }}
+              />
+            </div>
+          )}
           <Title>{game[Number(type)].title}</Title>
         </HeaderDiv>
         <QuestionCard color={color}>{question}</QuestionCard>
