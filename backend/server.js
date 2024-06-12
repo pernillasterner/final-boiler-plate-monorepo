@@ -49,8 +49,35 @@ const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/pluggIn-users";
 mongoose.connect(mongoUrl);
 mongoose.Promise = Promise;
 
+const levelSchema = new mongoose.Schema({
+  level: { type: Number, default: 1 },
+  score: { type: Number, default: 0 },
+  levelScore: { type: Number, default: 20 },
+});
+
+const mathSchema = new mongoose.Schema({
+  addition: {
+    levels: [levelSchema],
+  },
+  multiplication: {
+    levels: [levelSchema],
+  },
+  subtraction: {
+    levels: [levelSchema],
+  },
+  division: {
+    levels: [levelSchema],
+  },
+});
+
+const subjectSchema = new mongoose.Schema({
+  level: { type: Number, default: 1 },
+  score: { type: Number, default: 0 },
+  levelScore: { type: Number, default: 20 },
+});
+
 // Defining schema for a User
-const User = mongoose.model("User", {
+const userSchema = new mongoose.Schema({
   username: {
     type: String,
     unique: true,
@@ -82,64 +109,15 @@ const User = mongoose.model("User", {
     default: () => crypto.randomBytes(128).toString("hex"),
   },
   progress: {
-    math: {
-      addition: {
-        levels: [
-          {
-            level: { type: Number, default: 1 },
-            score: { type: Number, default: 0 },
-            levelScore: { type: Number, default: 20 },
-          },
-        ],
-      },
-      multiplication: {
-        levels: [
-          {
-            level: { type: Number, default: 1 },
-            score: { type: Number, default: 0 },
-            levelScore: { type: Number, default: 20 },
-          },
-        ],
-      },
-      subtraction: {
-        levels: [
-          {
-            level: { type: Number, default: 1 },
-            score: { type: Number, default: 0 },
-            levelScore: { type: Number, default: 20 },
-          },
-        ],
-      },
-      division: {
-        levels: [
-          {
-            level: { type: Number, default: 1 },
-            score: { type: Number, default: 0 },
-            levelScore: { type: Number, default: 20 },
-          },
-        ],
-      },
-    },
-    swedish: {
-      levels: [
-        {
-          level: { type: Number, default: 1 },
-          score: { type: Number, default: 0 },
-          levelScore: { type: Number, default: 20 },
-        },
-      ],
-    },
-    english: {
-      levels: [
-        {
-          level: { type: Number, default: 1 },
-          score: { type: Number, default: 0 },
-          levelScore: { type: Number, default: 20 },
-        },
-      ],
-    },
+    math: mathSchema,
+    swedish: subjectSchema,
+    english: subjectSchema,
   },
 });
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = User;
 
 //Authenticate user as middleware
 const authenticateUser = async (req, res, next) => {
