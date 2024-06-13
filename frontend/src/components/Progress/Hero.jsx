@@ -4,32 +4,23 @@ import heroImgUrl from "/src/assets/ProgressHeader.jpg";
 
 export const Hero = () => {
   const { user } = useLogin();
-  console.log(user);
+
   const content = {
     heroTitle: `Hej ${user?.firstName} 👋`,
     intro:
       "Sidan där du kan förbättra dina kunskaper i olika skolämnen. Registrera dig för att spara dina framsteg i spelen.",
-    heroImgUrl: "./ProgressHeader.png",
-    heroImgAlt: "Barn studerar i soffa",
   };
 
   return (
     <HeroContainer>
       <HeroLeft>
         <HeroTitle>{content.heroTitle}</HeroTitle>
-        <p>
-          När du spelar spel och gör uppgifter här, sparas dina framsteg så att
-          du kan se hur mycket du har lärt dig och blivit bättre på.
-        </p>
-        <p>
+        <HeroP>
           Nedanför kan du se hur det har gått för dig i varje ämne, som matte,
           svenska och engelska.
-        </p>
-        <p>Ha kul och fortsätt lära dig nya saker varje dag! 🎓📚</p>
+        </HeroP>
+        <HeroP>Ha kul och fortsätt lära dig nya saker varje dag! 🎓📚</HeroP>
       </HeroLeft>
-      {/* <HeroRight>
-        <ProgressBox></ProgressBox>
-      </HeroRight> */}
     </HeroContainer>
   );
 };
@@ -41,33 +32,26 @@ const HeroContainer = styled.div`
   min-height: 400px;
   background-image: url(${heroImgUrl});
   background-size: cover;
-  /* background-position: center center; */
   height: auto;
 `;
 
 const HeroTitle = styled.h1`
-  margin: 10px 0;
+  margin-bottom: 20px;
+  text-align: center;
+
+  @media (min-width: 700px) {
+    font-size: 2.5rem;
+  }
+`;
+
+const HeroP = styled.p`
+  text-align: center;
+  margin: 20px 0;
+  @media (min-width: 700px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const HeroLeft = styled.div`
   width: 50%;
-`;
-
-const HeroRight = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
-  background-color: #f1f1f1;
-  border-radius: 30px;
-`;
-
-const ProgressBox = styled.div`
-  padding: 30px;
-  background-color: #f1f1f1;
-  border-radius: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

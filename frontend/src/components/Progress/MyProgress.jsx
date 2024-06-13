@@ -7,7 +7,7 @@ import { Hero } from "./Hero";
 export const Progress = () => {
   const { progress } = useScore();
   const [selectedSubject, setSelectedSubject] = useState(null);
-  console.log(progress);
+
   if (!progress) {
     return <div>Loading...</div>;
   }
@@ -19,6 +19,7 @@ export const Progress = () => {
   return (
     <ProgressContainer>
       <Hero />
+      <GamesH2>VÄLJ ETT ÄMNE FÖR ATT SE DINA RESULTAT</GamesH2>
       <GamesCards>
         <GameCard math onClick={() => handleProgressButton("math")}>
           Matte
@@ -43,6 +44,13 @@ export const Progress = () => {
 
 const ProgressContainer = styled.div`
   margin: 0 auto;
+`;
+
+const GamesH2 = styled.h2`
+  text-align: center;
+  @media (min-width: 1025px) {
+    font-size: 35px;
+  }
 `;
 
 const GamesCards = styled.div`
