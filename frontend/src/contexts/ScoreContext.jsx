@@ -106,8 +106,37 @@ export const ScoreProvider = ({ children }) => {
     setMessage("");
   };
 
-  const registerAnswer = async (answerData) => {
-    console.log(answerData);
+  const registerAnswer = async ({
+    answer,
+    subject,
+    level,
+    subcategory,
+    score,
+  }) => {
+    try {
+      const response = await fetch(`${apiUrl}/progress`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: authenticated.accessToken,
+        },
+        body: JSON.stringify({
+          subject,
+          subcategory,
+          level,
+          score,
+        }),
+      });
+      console.log(response);
+      if (!response.ok) {
+        throw new Error("Failed to save progress");
+      }
+
+      const data = await response.json();
+      console.log("Progress saved:", data);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   // Fetching progress data from db

@@ -1,8 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
-import PropTypes from "prop-types"
-import { createContext, useContext, useState } from "react"
+import PropTypes from "prop-types";
+import { createContext, useContext, useState } from "react";
 
-const MathContext = createContext()
+const MathContext = createContext();
 
 export const MathProvider = ({ children }) => {
   const [mathGame, setMathGame] = useState([
@@ -13,6 +13,7 @@ export const MathProvider = ({ children }) => {
       level: 1,
       score: 0,
       levelScore: 20,
+      subcategory: "addition",
     },
     {
       title: "Subtrahera",
@@ -21,6 +22,7 @@ export const MathProvider = ({ children }) => {
       level: 1,
       score: 0,
       levelScore: 20,
+      subcategory: "subtraction",
     },
     {
       title: "Multiplicera",
@@ -29,6 +31,7 @@ export const MathProvider = ({ children }) => {
       level: 1,
       score: 0,
       levelScore: 20,
+      subcategory: "multiplication",
     },
     {
       title: "Dividera",
@@ -37,6 +40,7 @@ export const MathProvider = ({ children }) => {
       level: 1,
       score: 0,
       levelScore: 20,
+      subcategory: "division",
     },
   ]);
 
@@ -94,7 +98,7 @@ export const MathProvider = ({ children }) => {
       newGame[1].correctAnswer = b - a;
       setMathGame(newGame);
     }
-  }
+  };
 
   //MULTIPLICATION
   const generateMultiplicationQuestion = () => {
@@ -118,7 +122,7 @@ export const MathProvider = ({ children }) => {
     newGame[2].question = `Vad är ${a}*${b}?`;
     newGame[2].correctAnswer = a * b;
     setMathGame(newGame);
-  }
+  };
 
   //DIVISION
   const generateDivisionQuestion = () => {
@@ -143,7 +147,7 @@ export const MathProvider = ({ children }) => {
     newGame[3].question = `Vad är ${c}/${a}?`;
     newGame[3].correctAnswer = c / a;
     setMathGame(newGame);
-  }
+  };
 
   //Decides which type of problem to generate based on prop from Math.jsx
   const generateQuestion = (type) => {
@@ -171,7 +175,7 @@ export const MathProvider = ({ children }) => {
       default:
         generateAdditionQuestion();
     }
-  }
+  };
 
   return (
     <MathContext.Provider
@@ -183,11 +187,11 @@ export const MathProvider = ({ children }) => {
     >
       {children}
     </MathContext.Provider>
-  )
-}
+  );
+};
 
 export const useMath = () => useContext(MathContext);
 
 MathProvider.propTypes = {
   children: PropTypes.any,
-}
+};
