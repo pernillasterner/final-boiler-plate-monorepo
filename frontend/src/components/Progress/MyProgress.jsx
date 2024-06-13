@@ -74,7 +74,7 @@ const GameCard = styled.div`
   @media (min-width: 700px) {
     max-width: 600px;
     min-width: 200px;
-    height: 220px;
+    height: 120px;
     font-size: 60px;
   }
 

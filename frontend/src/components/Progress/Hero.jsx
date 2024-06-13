@@ -1,13 +1,22 @@
 import styled from "styled-components";
 import { useLogin } from "./../../contexts/UserContext";
+import heroImgUrl from "/src/assets/ProgressHeader.jpg";
 
 export const Hero = () => {
   const { user } = useLogin();
 
+  const content = {
+    heroTitle: `Hej ${user?.firstName} 👋`,
+    intro:
+      "Sidan där du kan förbättra dina kunskaper i olika skolämnen. Registrera dig för att spara dina framsteg i spelen.",
+    heroImgUrl: "./ProgressHeader.png",
+    heroImgAlt: "Barn studerar i soffa",
+  };
+
   return (
     <HeroContainer>
       <HeroLeft>
-        <HeroTitle>Välkommen {user?.firstName} 👋</HeroTitle>
+        <HeroTitle>{content.heroTitle}</HeroTitle>
         <p>
           När du spelar spel och gör uppgifter här, sparas dina framsteg så att
           du kan se hur mycket du har lärt dig och blivit bättre på.
@@ -18,17 +27,22 @@ export const Hero = () => {
         </p>
         <p>Ha kul och fortsätt lära dig nya saker varje dag! 🎓📚</p>
       </HeroLeft>
-      <HeroRight>
+      {/* <HeroRight>
         <ProgressBox></ProgressBox>
-      </HeroRight>
+      </HeroRight> */}
     </HeroContainer>
   );
 };
 
 const HeroContainer = styled.div`
   display: flex;
+  justify-content: center;
   padding: 60px 30px;
   min-height: 400px;
+  background-image: url(${heroImgUrl});
+  background-size: cover;
+  /* background-position: center center; */
+  height: auto;
 `;
 
 const HeroTitle = styled.h1`
