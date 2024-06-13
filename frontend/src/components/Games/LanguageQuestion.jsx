@@ -7,7 +7,9 @@ import Right from "../../assets/Right.json";
 import Wrong from "../../assets/Wrong.json";
 import Celebrate from "../../assets/Celebrate.json";
 
+
 export const LanguageQuestion = ({ type, language, color, subcategory }) => {
+
   const {
     englishGame,
     setEnglishGame,

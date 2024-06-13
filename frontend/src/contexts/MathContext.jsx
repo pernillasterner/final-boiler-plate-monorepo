@@ -44,6 +44,9 @@ export const MathProvider = ({ children }) => {
     },
   ]);
 
+  //Handles animation on level-change
+  const [celebrateLottie, setCelebrateLottie] = useState(false)
+
   //Generates different questions depending on the type of mathematical operation
   //ADDITION
   const generateAdditionQuestion = () => {
@@ -150,14 +153,16 @@ export const MathProvider = ({ children }) => {
   };
 
   //Decides which type of problem to generate based on prop from Math.jsx
-  const generateQuestion = (type) => {
+  const generateQuestion = (type) => {    
     //use next line for testing/demoing (only three questions before level-change)
-    //if (mathGame[type].score >= 3) {
-    if (mathGame[type].score >= mathGame[type].levelScore) {
-      const newGame = [...mathGame];
-      newGame[type].level = mathGame[type].level + 1;
-      newGame[type].score = 0;
-      setMathGame(newGame);
+    if (mathGame[type].score >= 3) {
+    //if (mathGame[type].score >= mathGame[type].levelScore) {
+      setCelebrateLottie(true)
+      const newGame = [...mathGame]
+      newGame[type].level = mathGame[type].level + 1
+      newGame[type].score = 0
+      setMathGame(newGame)
+      setTimeout(() => setCelebrateLottie(false), 3000)
     }
     switch (type) {
       case 0:
@@ -183,6 +188,7 @@ export const MathProvider = ({ children }) => {
         mathGame,
         setMathGame,
         generateQuestion,
+        celebrateLottie
       }}
     >
       {children}
