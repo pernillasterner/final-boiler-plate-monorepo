@@ -1,14 +1,22 @@
 import styled from "styled-components";
+import { useLogin } from "./../../contexts/UserContext";
 
-export const Hero = ({ user }) => {
+export const Hero = () => {
+  const { user } = useLogin();
+
   return (
     <HeroContainer>
       <HeroLeft>
-        <HeroTitle>Välkommen {user?.username} 👋</HeroTitle>
+        <HeroTitle>Välkommen {user?.firstName} 👋</HeroTitle>
         <p>
-          Här hittar du alla dina resultat från uppgifterna! Till höger har du
-          en totalt resultat medans nedanför resultat för varje ämne.
+          När du spelar spel och gör uppgifter här, sparas dina framsteg så att
+          du kan se hur mycket du har lärt dig och blivit bättre på.
         </p>
+        <p>
+          Nedanför kan du se hur det har gått för dig i varje ämne, som matte,
+          svenska och engelska.
+        </p>
+        <p>Ha kul och fortsätt lära dig nya saker varje dag! 🎓📚</p>
       </HeroLeft>
       <HeroRight>
         <ProgressBox></ProgressBox>
