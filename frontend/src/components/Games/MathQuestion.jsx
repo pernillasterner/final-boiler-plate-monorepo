@@ -7,8 +7,7 @@ import Right from "../../assets/Right.json"
 import Wrong from "../../assets/Wrong.json"
 
 export const MathQuestion = ({ focusRef, type }) => {
-  const { mathGame, setMathGame, generateQuestion } =
-    useMath()
+  const { mathGame, setMathGame, generateQuestion } = useMath()
   const currentScore = mathGame[Number(type)].score
 
   const [message, setMessage] = useState("")
@@ -16,38 +15,36 @@ export const MathQuestion = ({ focusRef, type }) => {
   const numPadNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
   const [rightLottie, setRightLottie] = useState(false)
   const [wrongLottie, setWrongLottie] = useState(false)
- 
+
   useEffect(() => {
     generateQuestion(Number(type))
     if (focusRef.current) {
       focusRef.current.focus()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   //Checks if input matches correctAnswer and gives the user a message of "right/wrong"
   //Then starts a new question
   const checkAnswer = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (answerInput == mathGame[Number(type)].correctAnswer) {
-      setTimeout(() => setRightLottie(true), 1000);
-      setTimeout(() => setRightLottie(false), 5000);
+      setTimeout(() => setRightLottie(true), 500)
+      setTimeout(() => setRightLottie(false), 4600)
 
       const newGame = [...mathGame]
-      setTimeout(() => (newGame[Number(type)].score = currentScore + 1), 3000)      
+      setTimeout(() => (newGame[Number(type)].score = currentScore + 1), 3000)
       setTimeout(() => setMathGame(newGame), 3000)
     } else {
-      setTimeout(() => setWrongLottie(true), 1000);
+      setTimeout(() => setWrongLottie(true), 500)
       setTimeout(
         () =>
-          setMessage(
-            `Rätt svar var ${mathGame[Number(type)].correctAnswer}.`
-          ),
-        3000
+          setMessage(`Rätt svar var ${mathGame[Number(type)].correctAnswer}.`),
+        2500
       )
-      setTimeout(() => setWrongLottie(false), 5000)
+      setTimeout(() => setWrongLottie(false), 4600)
     }
-    setTimeout(() => newQuestion(), 5000)
+    setTimeout(() => newQuestion(), 4500)
   }
 
   //Resets message and input-field before generating new question
@@ -66,7 +63,7 @@ export const MathQuestion = ({ focusRef, type }) => {
     if (focusRef.current) {
       focusRef.current.focus()
     }
-  };
+  }
 
   const handleDeleteClick = () => {
     setAnswerInput("")
@@ -140,9 +137,7 @@ export const MathQuestion = ({ focusRef, type }) => {
       </div>
     )
   } else {
-    return (
-      <Title>Du har klarat alla nivåer! Grattis!</Title>
-    )
+    return <Title>Du har klarat alla nivåer! Grattis!</Title>
   }
 }
 
@@ -173,7 +168,7 @@ const QuestionCard = styled.div`
     height: 150px;
     font-size: 50px;
   }
-`;
+`
 const Answer = styled.form`
   display: flex;
   flex-direction: row;
@@ -184,7 +179,7 @@ const Answer = styled.form`
   @media (min-width: 700px) {
     gap: 20px;
   }
-`;
+`
 
 const AnswerInput = styled.input`
   color: #ffffff;
@@ -213,7 +208,7 @@ const AnswerInput = styled.input`
     height: 54px;
     font-size: 16px;
   }
-`;
+`
 
 const AnswerBtn = styled.button`
   color: white;
@@ -247,7 +242,7 @@ const NumPad = styled.div`
   gap: 10px;
   max-width: 270px;
   margin: 10px auto;
-`;
+`
 
 const NumPadBtn = styled.button`
   ${(props) =>
@@ -288,20 +283,17 @@ const NumPadBtn = styled.button`
     box-shadow: 4px 4px var(--oceanshadow);
     transition: 0.2s ease;
   }
-`;
+`
 const Message = styled.div`
   color: black;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 10px auto;
-  background-color: white;
-  z-index: 2;
-  font-size: 20px;
-  border-radius: 20px;
-`;
+  font-size: 18px;
+`
 
 MathQuestion.propTypes = {
   focusRef: PropTypes.any,
   type: PropTypes.string,
-};
+}
