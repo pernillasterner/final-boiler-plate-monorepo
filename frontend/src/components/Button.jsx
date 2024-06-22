@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const Button = styled.button`
   background-color: var(--raspberry);
   color: #fff;
+  text-shadow: 1px 1px 1px black;
   border-radius: 15px;
   border: none;
   padding: 10px 20px;

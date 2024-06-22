@@ -2,12 +2,10 @@ import styled, { css } from "styled-components"
 import { Link } from "react-router-dom"
 import { useEffect } from "react"
 import { useUser } from "../contexts/UserContext"
-import { useScore } from "../contexts/ScoreContext"
 import { Footer } from "../components/Footer"
 
 export const Play = () => {
   const { isLoggedIn, setIsLoggedIn, user, setUser } = useUser()
-  const { fetchProgress } = useScore()
 
   useEffect(() => {
     const firstName = localStorage.getItem("firstName")
@@ -17,7 +15,6 @@ export const Play = () => {
     const accessToken = localStorage.getItem("accessToken")
     if (accessToken) {
       setIsLoggedIn(true)
-      fetchProgress()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -97,6 +94,7 @@ const GameCard = styled.div`
   height: 130px;
   margin: 20px auto;
   color: white;
+  text-shadow: 1px 1px 2px black;
   background-color: var(--forest);
   font-size: 50px;
 

@@ -22,7 +22,7 @@ export const Math = () => {
       <MathGameSite>
         <HeaderDiv>
           <TitleDiv>
-            <BackButton onClick={() => setGameTypeNumber(null)}>
+            <BackButton onClick={() => setGameTypeNumber(null)} aria-label="Go back">
               <BackIcon />
             </BackButton>
             <Title>{mathGame[Number(gameTypeNumber)].title}</Title>
@@ -58,8 +58,8 @@ export const Math = () => {
         <MathGameSite>
           <HeaderDiv>
             <TitleDiv>
-              <BackButton>
-                <Link to="/spela">
+              <BackButton aria-label="Go back">
+                <Link to="/spela" aria-label="Tillbaka till spela-sidan">
                   <BackIcon />
                 </Link>
               </BackButton>
@@ -231,6 +231,7 @@ const Choices = styled.div`
 const GameTypeButton = styled.button`
   background-color: var(--ocean);
   color: white;
+  text-shadow: 1px 1px 2px black;
   font-size: 18px;
   width: 270px;
   height: 70px;

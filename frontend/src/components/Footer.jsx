@@ -6,7 +6,7 @@ export const Footer = () => {
   return (
     <FooterContainer>
       <FooterDiv>
-        <p>© Technigo Web Development Bootcamp 2024</p>
+        <CopyrightText>© Technigo Web Development Bootcamp 2024</CopyrightText>
         <Link to={`/om-oss`}>
           <About>
             <FaCircleInfo />
@@ -19,7 +19,7 @@ export const Footer = () => {
 }
 
 const FooterContainer = styled.div`
-  padding: 14px 20px;
+  padding: 20px 30px;
   background-color: var(--daffodil);
   width: 100%;
   display: flex;
@@ -29,6 +29,10 @@ const FooterContainer = styled.div`
   margin: auto;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 500px) {
+    padding: 14px 20px;
+  }
 
   @media (min-width: 1025px) {
     padding: 20px 30px;
@@ -43,9 +47,12 @@ const FooterDiv = styled.div`
   position: absolute;
   justify-content: space-between;
   align-items: center;
-  font-size: 13px;
+`
 
-  @media (min-width: 1025px) {
+const CopyrightText = styled.p`
+  font-size: 10px;
+
+  @media (min-width: 500px) {
     font-size: 15px;
   }
 `
@@ -57,6 +64,7 @@ const About = styled.div`
   align-items: center;
   color: black;
   font-size: 15px;
+  height: 25px;
 
   &:hover {
     color: var(--oceanhover);

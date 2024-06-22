@@ -12,10 +12,6 @@ code {
     monospace;
 }
 
-body {
-  background-color: var( --vanilla);
-}
-
 main {
   width: 100vw;
   height: 100vh;

@@ -86,6 +86,7 @@ const GameCard = styled.div`
   height: 80px;
   margin: 12px auto;
   color: white;
+  text-shadow: 1px 1px 2px black;
   background-color: var(--forest);
   font-size: 30px;
 

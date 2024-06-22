@@ -123,6 +123,7 @@ const QuestionCard = styled.div`
   background-color: ${(props) =>
     props.$color === "sunset" ? "var(--sunset)" : "var(--forest)"};
   color: white;
+  text-shadow: 1px 1px 2px black;
   padding: 20px;
   margin: 10px auto;
   z-index: 1;
@@ -153,6 +154,7 @@ const AnswerButton = styled.button`
   background-color: ${(props) =>
     props.$color === "sunset" ? "var(--sunset)" : "var(--forest)"};
   color: white;
+  text-shadow: 1px 1px 2px black;
   width: 270px;
   height: 50px;
   margin: 10px auto;
@@ -166,7 +168,9 @@ const AnswerButton = styled.button`
   cursor: pointer;
   box-shadow: 4px 4px
     ${(props) =>
-      props.$color === "sunset" ? "var(--sunsetshadow)" : "var(--forestshadow)"};
+      props.$color === "sunset"
+        ? "var(--sunsetshadow)"
+        : "var(--forestshadow)"};
 
   &:hover {
     background-color: ${(props) =>

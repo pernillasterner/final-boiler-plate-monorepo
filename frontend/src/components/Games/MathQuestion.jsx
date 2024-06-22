@@ -156,6 +156,7 @@ const QuestionCard = styled.div`
   font-size: 30px;
   background-color: var(--ocean);
   color: white;
+  text-shadow: 1px 1px 2px black;
   padding: 20px;
   margin: 10px auto;
   z-index: 1;
@@ -213,6 +214,7 @@ const AnswerInput = styled.input`
 
 const AnswerBtn = styled.button`
   color: white;
+  text-shadow: 1px 1px 2px black;
   background-color: var(--ocean);
   border-radius: 10px;
   border: none;
@@ -274,6 +276,7 @@ const NumPadBtn = styled.button`
   border: none;
   background-color: var(--ocean);
   color: white;
+  text-shadow: 1px 1px 2px black;
   padding: 10px 20px;
   font-size: 18px;
   cursor: pointer;
