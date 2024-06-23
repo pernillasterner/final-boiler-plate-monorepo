@@ -30,33 +30,35 @@ export const MathQuestion = ({ focusRef, type }) => {
   //Checks if input matches correctAnswer and gives the user a message of "right/wrong"
   //Then starts a new question
   const checkAnswer = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (answerInput == mathGame[Number(type)].correctAnswer) {
-      setTimeout(() => setRightLottie(true), 500);
-      setTimeout(() => setRightLottie(false), 4600);
+      setTimeout(() => setRightLottie(true), 500)
+      setTimeout(() => setRightLottie(false), 4600)
 
-      const newGame = [...mathGame];
-      setTimeout(() => (newGame[Number(type)].score = currentScore + 1), 3000);
-      setTimeout(() => setMathGame(newGame), 3000);
+      const newGame = [...mathGame]
+      setTimeout(() => (newGame[Number(type)].score = currentScore + 1), 3000)
+      setTimeout(() => setMathGame(newGame), 3000)
 
       // Send answer to backend
-      try {
-        await registerAnswer({
-          subject: "math",
-          level: newGame[type].level,
-          subcategory: subcategory,
-          score: currentScore + 1,
-        });
-      } catch (err) {
-        console.error("Error registration answer", err);
-      }
+      setTimeout(async () => {
+        try {
+          await registerAnswer({
+            subject: "math",
+            level: newGame[type].level,
+            subcategory: subcategory,
+            score: currentScore + 1,
+          })
+        } catch (err) {
+          console.error("Error registration answer", err)
+        }
+      }, 3000)
     } else {
-      setTimeout(() => setWrongLottie(true), 500);
+      setTimeout(() => setWrongLottie(true), 500)
       setTimeout(
         () =>
           setMessage(`Rätt svar var ${mathGame[Number(type)].correctAnswer}.`),
         2500
-      );
+      )
       setTimeout(() => setWrongLottie(false), 4600);
     }
     setTimeout(() => newQuestion(), 4500);
