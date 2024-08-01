@@ -5,6 +5,7 @@ import { FaBars, FaTimes } from "react-icons/fa"
 import { FiLogOut } from "react-icons/fi"
 import { useUser } from "../contexts/UserContext"
 import { useScore } from "../contexts/ScoreContext"
+import { useMath } from "../contexts/MathContext"
 import { SlideInPanel } from "./SlideInPanel"
 import { RegistrationForm } from "./RegistrationForm"
 import { Login } from "./LoginForm"
@@ -13,6 +14,7 @@ import logo from "/src/assets/pluggin-logo.png"
 export const Header = () => {
   const { isLoggedIn, setIsLoggedIn, signout, setUser, isPanelOpen, setIsPanelOpen } = useUser()
   const { fetchProgress } = useScore()
+  const { fetchMathProgress } = useMath()
   const [hamburgerOpen, setHamburgerOpen] = useState(false)
   
   const [panelType, setPanelType] = useState(null)
@@ -26,6 +28,7 @@ export const Header = () => {
     if (accessToken) {
       setIsLoggedIn(true)
       fetchProgress()
+      fetchMathProgress()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

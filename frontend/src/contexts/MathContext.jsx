@@ -5,6 +5,12 @@ import { createContext, useContext, useState } from "react"
 const MathContext = createContext()
 
 export const MathProvider = ({ children }) => {
+  //Variables for handling connection to backend
+  const accessToken = localStorage.getItem("accessToken")
+  const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:4000"
+  const [loading, setLoading] = useState(false)
+
+  //Object for math-game
   const [mathGame, setMathGame] = useState([
     {
       title: "Addera",
@@ -43,6 +49,8 @@ export const MathProvider = ({ children }) => {
       subcategory: "division",
     },
   ])
+
+  const [progress, setProgress] = useState({})
 
   //Handles animation on level-change
   const [celebrateLottie, setCelebrateLottie] = useState(false)
@@ -182,6 +190,149 @@ export const MathProvider = ({ children }) => {
     }
   }
 
+  // Fetching progress data from db
+  const fetchMathProgress = async () => {
+    setLoading(true)
+    try {
+      const response = await fetch(`${apiUrl}/progress`, {
+        headers: {
+          Authorization: accessToken,
+        },
+      })
+
+      if (!response.ok) {
+        console.log("Could not fetch")
+        throw new Error("Failed to fetch progress")
+      }
+
+      const data = await response.json()
+      setProgress(data.progress)
+
+      //Använd loop för att jämföra varje steg, istället för att skriva så här mycket kod?
+      const scoreOneMathAddition =
+        data.progress.progress.math.addition.levels[0].score
+      const scoreTwoMathAddition =
+        data.progress.progress.math.addition.levels[1].score
+      const scoreThreeMathAddition =
+        data.progress.progress.math.addition.levels[2].score
+      
+      const scoreOneMathSubtraction =
+        data.progress.progress.math.subtraction.levels[0].score
+      const scoreTwoMathSubtraction =
+        data.progress.progress.math.subtraction.levels[1].score
+      const scoreThreeMathSubtraction =
+        data.progress.progress.math.subtraction.levels[2].score
+
+      const scoreOneMathMultiplication =
+        data.progress.progress.math.multiplication.levels[0].score
+      const scoreTwoMathMultiplication =
+        data.progress.progress.math.multiplication.levels[1].score
+      const scoreThreeMathMultiplication =
+        data.progress.progress.math.multiplication.levels[2].score
+
+      const scoreOneMathDivision =
+        data.progress.progress.math.division.levels[0].score
+      const scoreTwoMathDivision =
+        data.progress.progress.math.division.levels[1].score
+      const scoreThreeMathDivision =
+        data.progress.progress.math.division.levels[2].score
+
+      const levelScore = 20
+
+      if (scoreOneMathAddition < levelScore) {
+        const newGame = [...mathGame]
+        newGame[0].level = 1
+        newGame[0].score = scoreOneMathAddition
+        setMathGame(newGame)
+      } else if (scoreTwoMathAddition < levelScore) {
+        const newGame = [...mathGame]
+        newGame[0].level = 2
+        newGame[0].score = scoreTwoMathAddition
+        setMathGame(newGame)
+      } else if (scoreThreeMathAddition < levelScore) {
+        const newGame = [...mathGame]
+        newGame[0].level = 3
+        newGame[0].score = scoreThreeMathAddition
+        setMathGame(newGame)
+      } else {
+        const newGame = [...mathGame]
+        newGame[0].level = 3
+        newGame[0].score = levelScore
+        setMathGame(newGame)
+      }
+
+      if (scoreOneMathSubtraction < levelScore) {
+        const newGame = [...mathGame]
+        newGame[1].level = 1
+        newGame[1].score = scoreOneMathSubtraction
+        setMathGame(newGame)
+      } else if (scoreTwoMathSubtraction < levelScore) {
+        const newGame = [...mathGame]
+        newGame[1].level = 2
+        newGame[1].score = scoreTwoMathSubtraction
+        setMathGame(newGame)
+      } else if (scoreThreeMathSubtraction < levelScore) {
+        const newGame = [...mathGame]
+        newGame[1].level = 3
+        newGame[1].score = scoreThreeMathSubtraction
+        setMathGame(newGame)
+      } else {
+        const newGame = [...mathGame]
+        newGame[1].level = 3
+        newGame[1].score = levelScore
+        setMathGame(newGame)
+      }
+
+      if (scoreOneMathMultiplication < levelScore) {
+        const newGame = [...mathGame]
+        newGame[2].level = 1
+        newGame[2].score = scoreOneMathMultiplication
+        setMathGame(newGame)
+      } else if (scoreTwoMathMultiplication < levelScore) {
+        const newGame = [...mathGame]
+        newGame[2].level = 2
+        newGame[2].score = scoreTwoMathMultiplication
+        setMathGame(newGame)
+      } else if (scoreThreeMathMultiplication < levelScore) {
+        const newGame = [...mathGame]
+        newGame[2].level = 3
+        newGame[2].score = scoreThreeMathMultiplication
+        setMathGame(newGame)
+      } else {
+        const newGame = [...mathGame]
+        newGame[2].level = 3
+        newGame[2].score = levelScore
+        setMathGame(newGame)
+      }
+
+      if (scoreOneMathDivision < levelScore) {
+        const newGame = [...mathGame]
+        newGame[3].level = 1
+        newGame[3].score = scoreOneMathDivision
+        setMathGame(newGame)
+      } else if (scoreTwoMathDivision < levelScore) {
+        const newGame = [...mathGame]
+        newGame[3].level = 2
+        newGame[3].score = scoreTwoMathDivision
+        setMathGame(newGame)
+      } else if (scoreThreeMathDivision < levelScore) {
+        const newGame = [...mathGame]
+        newGame[3].level = 3
+        newGame[3].score = scoreThreeMathDivision
+        setMathGame(newGame)
+      } else {
+        const newGame = [...mathGame]
+        newGame[3].level = 3
+        newGame[3].score = levelScore
+        setMathGame(newGame)
+      }
+
+      setLoading(false)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <MathContext.Provider
       value={{
@@ -189,6 +340,9 @@ export const MathProvider = ({ children }) => {
         setMathGame,
         generateQuestion,
         celebrateLottie,
+        fetchMathProgress,
+        loading,
+        progress
       }}
     >
       {children}
