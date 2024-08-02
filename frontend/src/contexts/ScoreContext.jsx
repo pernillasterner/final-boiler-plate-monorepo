@@ -105,12 +105,8 @@ export const ScoreProvider = ({ children }) => {
     setMessage("")
   }
 
-  const registerAnswer = async ({
-    subject,
-    level,
-    subcategory,
-    score,
-  }) => {
+  //Register the answer to backend
+  const registerAnswer = async ({ subject, level, subcategory, score }) => {
     try {
       const response = await fetch(`${apiUrl}/progress`, {
         method: "POST",
@@ -155,13 +151,19 @@ export const ScoreProvider = ({ children }) => {
 
       const data = await response.json()
       setProgress(data.progress)
-      const scoreOneEnglishTranslate = data.progress.progress.english.translate.levels[0].score
-      const scoreTwoEnglishTranslate = data.progress.progress.english.translate.levels[1].score
-      const scoreThreeEnglishTranslate = data.progress.progress.english.translate.levels[2].score
+      const scoreOneEnglishTranslate =
+        data.progress.progress.english.translate.levels[0].score
+      const scoreTwoEnglishTranslate =
+        data.progress.progress.english.translate.levels[1].score
+      const scoreThreeEnglishTranslate =
+        data.progress.progress.english.translate.levels[2].score
 
-      const scoreOneSwedishSynonyms = data.progress.progress.swedish.synonyms.levels[0].score
-      const scoreTwoSwedishSynonyms = data.progress.progress.swedish.synonyms.levels[1].score
-      const scoreThreeSwedishSynonyms = data.progress.progress.swedish.synonyms.levels[2].score
+      const scoreOneSwedishSynonyms =
+        data.progress.progress.swedish.synonyms.levels[0].score
+      const scoreTwoSwedishSynonyms =
+        data.progress.progress.swedish.synonyms.levels[1].score
+      const scoreThreeSwedishSynonyms =
+        data.progress.progress.swedish.synonyms.levels[2].score
 
       const levelScore = 20
 
@@ -207,8 +209,8 @@ export const ScoreProvider = ({ children }) => {
         newGame[0].level = 3
         newGame[0].score = levelScore
         setSwedishGame(newGame)
-      }     
-      
+      }
+
       setLoading(false)
     } catch (error) {
       console.error(error)
@@ -234,7 +236,7 @@ export const ScoreProvider = ({ children }) => {
         celebrateLottie,
         fetchProgress,
         loading,
-        registerAnswer
+        registerAnswer,
       }}
     >
       {children}
